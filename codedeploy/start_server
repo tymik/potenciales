@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+set -u
+set -x
+
+INSTANCE_NAME="potenciales"
+
+cd /opt/codedeploy-agent/deployment-root/${DEPLOYMENT_GROUP_ID}/${DEPLOYMENT_ID}/deployment-archive
+
+set -a
+source ./codedeploy/parameters
+set +a
+
+aws s3 cp s3://your-bucket/shared/secrets.env ./secrets-prod.env
+
+for envvar in $(cat ./secrets.env); do
+  export $envvar;
+done
+
+$(aws ecr get-login --region=eu-west-1 --no-include-email)
+
+COMPOSE="docker-compose -p ${INSTANCE_NAME} -f ./docker/docker-compose.yml"
+${COMPOSE} build
+${COMPOSE} up -d
+
+# Remove unused data, do not prompt for confirmation
+docker image prune -f
