@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  frontend:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    environment:
+      SOME_ENV: development
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      SOME_ENV: development
+  nginx-proxy:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/code
+    environment:
+      SOME_ENV: development
