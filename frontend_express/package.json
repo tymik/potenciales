@@ -1,0 +1,14 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "author": "Jan Tyminski <tymikk@gmail.com>",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "create-react-app": "3.4.1"
+  }
+}
