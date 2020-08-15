@@ -22,3 +22,24 @@ export default function Model({ handleClick, status }) {
     </>
   );
 }
+
+  export function Model2({ handleClick, status }) {
+    return (
+      <>
+        <Modal show={status} onHide={handleClick}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading BE</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal! BE</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClick}>
+              Close BE
+            </Button>
+            <Button variant="primary" onClick={handleClick}>
+              Save Changes BE
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+}
