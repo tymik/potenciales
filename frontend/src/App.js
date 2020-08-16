@@ -2,23 +2,26 @@ import React from 'react';
 import Model, {Model2} from "./Model";
 
 class App extends React.Component {
-  state = { status: false };
-  state2 = { status2: false };
+
+  state = { frontendId: false, backendId: false  };
+
   handleClick = e => {
-    this.setState(prev => ({ status: !prev.status }));
+    this.setState(prev => ({ frontendId: !prev.frontendId }));
   };
+  
   handleClick2 = e => {
-    this.setState(prev => ({ status2: !prev.status2 }));
+    this.setState(prev => ({ backendId: !prev.backendId }));
   };
+  
   render() {
-    const { status } = this.state;
-    const { status2 } = this.state2;
+    const { frontendId, backendId } = this.state;
     return (
       <>
         <button onClick={this.handleClick}>Get ID from Frontend</button>
-        {status && <Model status={status} handleClick={this.handleClick} />}
+        {frontendId && <Model status={frontendId} handleClick={this.handleClick} />}
+
         <button onClick={this.handleClick2}>Get ID from Backend</button>
-        {status2 && <Model2 status={status2} handleClick={this.handleClick2} />}
+        {backendId && <Model2 status={backendId} handleClick={this.handleClick2} />}
       </>
     );
   }
