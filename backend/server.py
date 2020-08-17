@@ -1,19 +1,29 @@
 import platform
 
+import asyncio
 from aiohttp import web
+
+from aiohttp_middlewares import cors_middleware
+from aiohttp_middlewares.cors import DEFAULT_ALLOW_HEADERS
 
 from myjsons import *
 
-async def handle(request):
+async def handler(request):
     hostname = platform.node()
     text = "Hello, This is the ID of this container:" + hostname
-    return web.Response(text=text)
+    return web.Response(
+        text=text,
+        headers={
+            "Access-Control-Allow-Origin": "*",
+        })
 
 
+app = web.Application(
+    middlewares=[cors_middleware(allow_all=True)]
+)
 
-app = web.Application()
-app.add_routes([web.get('/', handle),
-                web.get('/{hostname}', handle),
+app.add_routes([web.get('/', handler),
+                web.get('/{hostname}', handler),
                 web.get('/json/{hostname}', hostname_json)])
 
 if __name__ == '__main__':
