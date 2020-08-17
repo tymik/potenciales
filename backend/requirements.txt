@@ -1,2 +1,2 @@
 aiohttp[speedups]
-aiohttp_cors
+aiohttp_middlewares
