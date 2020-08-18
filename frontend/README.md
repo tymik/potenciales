@@ -1,3 +1,28 @@
+# React frontend
+
+## How to build docker image and start container
+
+This is just a short manual for building React part, there are some APIs available for learning purposes, so my python part is not necessary to continue development on React.
+An example API for fetching: https://jsonplaceholder.typicode.com/posts taken from https://rahmanfadhil.com/fetch-data-with-react-hooks/
+
+Building:
+
+```
+cd frontend
+docker run --rm -d -v ${PWD}:/app -w /app --name node node npm install
+docker build -f Dockerfile.prod -t tymik/frontend .
+```
+
+Starting container:
+
+```
+docker run -it -d --rm -p 80:80 --name frontend tymik/frontend
+```
+
+You also need to use `docker run --rm -d -v ${PWD}:/app -w /app --name node node npm install` every time you add new dependencies to `package.json`.
+
+## ORIGINAL README FROM BOOTSTRAPPED APP BELOW
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
