@@ -21,6 +21,24 @@ docker run -it -d --rm -p 80:80 --name frontend tymik/frontend
 
 You also need to use `docker run --rm -d -v ${PWD}:/app -w /app --name node node npm install` every time you add new dependencies to `package.json`.
 
+## Debugging mode
+
+In case you need unmimified version for debugging
+
+Building:
+
+```
+cd frontend
+docker run --rm -d -v ${PWD}:/app -w /app --name node node npm install
+docker build -f Dockerfile.debug -t tymik/frontend:debug .
+```
+
+Starting container:
+
+```
+docker run -it -d --rm -p 80:3000 --name frontend tymik/frontend:debug
+```
+
 ## ORIGINAL README FROM BOOTSTRAPPED APP BELOW
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

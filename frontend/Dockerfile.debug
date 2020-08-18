@@ -1,0 +1,23 @@
+# based on https://mherman.org/blog/dockerizing-a-react-app/
+# pull official base image
+FROM node:14.7.0-alpine
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci
+RUN npm install react-scripts@3.4.3 -g --silent
+
+# add app
+COPY . ./
+
+RUN npm run build
+
+EXPOSE 3000
+CMD ["npm", "start"]
