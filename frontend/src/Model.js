@@ -42,9 +42,11 @@ export default function Model({ handleClick, status }) {
   );
 }
 
-  export function Model2({ handleClick, status }) {
-    var fetchedHostname = MyComponent();
-    console.log(fetchedHostname);
+  export async function Model2({ handleClick, status }) {
+    console.log("I'm in Model2 right now")
+    let fetchedHostname = await MyComponent();
+    console.log(toString(fetchedHostname));
+    console.log("I'm in Model2 right now - but after executing fetcher")
     return (
       <>
         <Modal show={status} onHide={handleClick}>
