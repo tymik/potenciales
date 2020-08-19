@@ -1,40 +1,27 @@
-import React from 'react';
+// Thanks to Palid this started to work...
+
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal } from "react-bootstrap";
-import {MyComponent} from "./Fetcher";
-import os from 'os';
+import { Fetcher } from "./Fetcher";
 
-export default function Model({ handleClick, status }) {
-  // var hostname = os.hostname();
-  // var hostname = os.platform();
-  // console.log(hostname);
-  var appname = window.navigator.appName;
-  var type = os.type();
-  var release = os.release();
-  var hostname = os.hostname();
-  var arch = os.arch();
-  var platform = os.platform();
-
+export function FrontendModel({ handleClick, status }) {
+  const useragent = window.navigator.userAgent;
   return (
     <>
       <Modal show={status} onHide={handleClick}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Modal heading FE</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <p>browser/navigator/?: { appname } </p>
-        <p>type: { type }</p>
-        <p>release: { release }</p>
-        <p>hostname: { hostname }</p>
-        <p>arch: { arch }</p>
-        <p>platform: { platform }</p>
+          UserAgent: {useragent}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClick}>
-            Close
+            Close FE
           </Button>
           <Button variant="primary" onClick={handleClick}>
-            Save Changes
+            Save Changes FE
           </Button>
         </Modal.Footer>
       </Modal>
@@ -42,27 +29,26 @@ export default function Model({ handleClick, status }) {
   );
 }
 
-  export async function Model2({ handleClick, status }) {
-    console.log("I'm in Model2 right now")
-    let fetchedHostname = await MyComponent();
-    console.log(toString(fetchedHostname));
-    console.log("I'm in Model2 right now - but after executing fetcher")
-    return (
-      <>
-        <Modal show={status} onHide={handleClick}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading BE</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal! BE</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClick}>
-              Close BE
-            </Button>
-            <Button variant="primary" onClick={handleClick}>
-              Save Changes BE
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
+export function BackendModel({ handleClick, status }) {
+  return (
+    <>
+      <Modal show={status} onHide={handleClick}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading BE</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Hostname from backend:
+          <Fetcher />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClick}>
+            Close BE
+          </Button>
+          <Button variant="primary" onClick={handleClick}>
+            Save Changes BE
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }

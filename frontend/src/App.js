@@ -1,27 +1,33 @@
-import React from 'react';
-import Model, {Model2} from "./Model";
+import React from "react";
+import { FrontendModel, BackendModel } from "./Model";
 
 class App extends React.Component {
+  state = { frontendId: false, backendId: false };
 
-  state = { frontendId: false, backendId: false  };
+  setFrontendId = (e) => {
+    this.setState((prev) => ({ frontendId: !prev.frontendId }));
+  };
 
-  handleClick = e => {
-    this.setState(prev => ({ frontendId: !prev.frontendId }));
+  setBackendId = (e) => {
+    this.setState((prev) => ({ backendId: !prev.backendId }));
   };
-  
-  handleClick2 = e => {
-    this.setState(prev => ({ backendId: !prev.backendId }));
-  };
-  
+
   render() {
     const { frontendId, backendId } = this.state;
     return (
       <>
-        <button onClick={this.handleClick}>Get ID from Frontend</button>
-        {frontendId && <Model status={frontendId} handleClick={this.handleClick} />}
+        <button onClick={this.setFrontendId}>Get ID from Frontend</button>
+        {frontendId && (
+          <FrontendModel
+            status={frontendId}
+            setFrontendId={this.setFrontendId}
+          />
+        )}
 
-        <button onClick={this.handleClick2}>Get ID from Backend</button>
-        {backendId && <Model2 status={backendId} handleClick={this.handleClick2} />}
+        <button onClick={this.setBackendId}>Get ID from Backend</button>
+        {backendId && (
+          <BackendModel status={backendId} handleClick={this.setBackendId} />
+        )}
       </>
     );
   }
