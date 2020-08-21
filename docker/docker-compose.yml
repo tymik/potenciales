@@ -28,13 +28,14 @@ services:
     volumes:
       - .:/code
     environment:
+      VIRTUAL_HOST: backend
       SOME_ENV: development
 
   nginx-proxy:
     image: jwilder/nginx-proxy
     networks:
       - frontend
-      # - web
+      - backend
     ports:
       - "80:80"
       - "443:443"
