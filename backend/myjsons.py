@@ -7,5 +7,5 @@ async def hostname_json(request):
         data=data,
         headers={
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Request-Method": "*",
+            "Access-Control-Allow-Methods": "OPTIONS, HEAD, GET, POST",
         })
