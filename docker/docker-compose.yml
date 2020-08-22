@@ -6,6 +6,8 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile.prod
+    depends_on:
+      - nginx-proxy
     networks:
       - frontend
       - backend
@@ -15,12 +17,14 @@ services:
       - .:/code
     environment:
       VIRTUAL_HOST: frontend.local
-      SOME_ENV: development
+      # BACKEND_ADDRESS: backend
 
   backend:
     build:
       context: ../backend
       dockerfile: Dockerfile
+    depends_on:
+      - nginx-proxy
     networks:
       - backend
     expose:
@@ -29,7 +33,7 @@ services:
       - .:/code
     environment:
       VIRTUAL_HOST: backend
-      SOME_ENV: development
+      # ALLOW_ORIGIN: development
 
   nginx-proxy:
     image: jwilder/nginx-proxy

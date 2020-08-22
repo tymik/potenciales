@@ -15,3 +15,8 @@ docker-compose build
 ```
 docker-compose up -d
 ```
+
+## Additional information
+
+There are env vars `BACKEND_ADDRESS` at the frontend container and `ALLOW_ORIGIN` at backend container that I think I will use in future, if I get some time to implement them.
+For now I need to focus on other things, so I will just skip it and hopefully come back to it later.
