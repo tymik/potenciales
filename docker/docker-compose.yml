@@ -6,6 +6,7 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile.prod
+    image: tymik/potenciales-react-frontend
     depends_on:
       - nginx-proxy
     networks:
@@ -23,6 +24,7 @@ services:
     build:
       context: ../backend
       dockerfile: Dockerfile
+    image: tymik/potenciales-python-backend
     depends_on:
       - nginx-proxy
     networks:
@@ -51,6 +53,3 @@ services:
 networks:
   frontend:
   backend:
-  web:
-    external: true
-    name: bridge
