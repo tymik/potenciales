@@ -1,27 +1,56 @@
-version: '3.8'
+version: '3.7'
+
 services:
+
   frontend:
-    build: .
-    ports:
-      - "8000:8000"
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - nginx-proxy
+    networks:
+      - frontend
+      - backend
+    expose:
+      - "80"
     volumes:
       - .:/code
     environment:
-      SOME_ENV: development
+      VIRTUAL_HOST: frontend.local
+      # BACKEND_ADDRESS: backend
+
   backend:
-    build: .
-    ports:
-      - "5000:5000"
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    depends_on:
+      - nginx-proxy
+    networks:
+      - backend
+    expose:
+      - "8080"
     volumes:
       - .:/code
     environment:
-      SOME_ENV: development
+      VIRTUAL_HOST: backend
+      # ALLOW_ORIGIN: development
+
   nginx-proxy:
-    build: .
+    image: jwilder/nginx-proxy
+    networks:
+      - frontend
+      - backend
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - .:/code
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     environment:
       SOME_ENV: development
+
+networks:
+  frontend:
+  backend:
+  web:
+    external: true
+    name: bridge

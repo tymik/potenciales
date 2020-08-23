@@ -13,7 +13,7 @@ export function Fetcher() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8080/json/hostname")
+    fetch("http://backend/json/hostname")
       .then((res) => res.json())
       .then(
         (result) => {

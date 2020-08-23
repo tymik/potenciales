@@ -15,6 +15,7 @@ async def handler(request):
         text=text,
         headers={
             "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS, HEAD, GET, POST",
         })
 
 
@@ -22,9 +23,9 @@ app = web.Application(
     middlewares=[cors_middleware(allow_all=True)]
 )
 
-app.add_routes([web.get('/', handler),
-                web.get('/{hostname}', handler),
-                web.get('/json/{hostname}', hostname_json)])
+app.add_routes([web.route('*', '/', handler),
+                web.route('*', '/{hostname}', handler),
+                web.route('*', '/json/{hostname}', hostname_json)])
 
 if __name__ == '__main__':
     web.run_app(app)
