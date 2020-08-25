@@ -31,8 +31,14 @@ orbs:
 #       executor:
 
 workflows:
+  lint:
+    jobs:
+      - docker/hadolint:
+          dockerfiles: ./backend/Dockerfile ./frontend/Dockerfile.prod
+          
   build-and-publish-docker-image:
     jobs:
+      
       - docker/publish:
           docker-context: ./backend
           dockerfile: ./backend/Dockerfile
