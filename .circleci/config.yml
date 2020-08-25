@@ -38,7 +38,7 @@ workflows:
       - docker/hadolint:
           dockerfiles: ./frontend/Dockerfile.prod ./backend/Dockerfile
       - docker/hadolint:
-          dockerfiles: ./backend/Dockerfile ./frontend/Dockerfile.prod
+          dockerfiles: ./backend/Dockerfile 
       - docker/hadolint:
           dockerfiles: ./frontend/Dockerfile.prod
           
