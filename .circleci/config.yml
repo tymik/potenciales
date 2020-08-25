@@ -35,6 +35,12 @@ workflows:
     jobs:
       - docker/hadolint:
           dockerfiles: ./backend/Dockerfile ./frontend/Dockerfile.prod
+      - docker/hadolint:
+          dockerfiles: ./frontend/Dockerfile.prod ./backend/Dockerfile
+      - docker/hadolint:
+          dockerfiles: ./backend/Dockerfile ./frontend/Dockerfile.prod
+      - docker/hadolint:
+          dockerfiles: ./frontend/Dockerfile.prod
           
   build-and-publish-docker-image:
     jobs:
