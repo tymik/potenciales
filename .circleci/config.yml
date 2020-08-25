@@ -41,3 +41,11 @@ workflows:
           docker-password: dockerhub_potenciales_token
           before_build:
             - checkout
+      - docker/publish:
+          docker-context: ./frontend
+          dockerfile: ./frontend/Dockerfile.prod
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME_REACT_FE
+          docker-username: CIRCLE_PROJECT_USERNAME
+          docker-password: dockerhub_potenciales_token
+          before_build:
+            - checkout
