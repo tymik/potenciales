@@ -1,8 +1,40 @@
 version: 2.1
-jobs:
-  build:
-    docker: 
-      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
-    steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+
+orbs:
+  docker: circleci/docker@1.4.0
+
+# commands:
+#   dkr-cmd:
+#     parameters:
+#       dkr:
+#         default: build
+#         type: string
+#     # resource_class: small
+#     steps:
+#       - run: docker login --username tymik --password $dockerhub_potenciales_token
+#       - run: docker-compose <<parameters.dkr>>
+
+# jobs:
+#   build:
+#     docker: 
+#       - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+#     steps:
+#       - checkout # check out the code in the project directory
+#       - run: echo "hello world" # run the `echo` command
+
+#   compose:
+#     parameters:
+#       compose-command:
+#         default: build
+#         type: string
+#       steps:
+#       executor:
+
+workflows:
+  build-and-publish-docker-image:
+    jobs:
+      - docker/publish:
+          docker-context: ./backend
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME_PYTHON_BE
+          docker-username: tymik
+          docker-password: $dockerhub_potenciales_token
