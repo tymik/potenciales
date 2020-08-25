@@ -37,4 +37,4 @@ workflows:
           docker-context: ./backend
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME_PYTHON_BE
           docker-username: tymik
-          docker-password: $dockerhub_potenciales_token
+          docker-password: dockerhub_potenciales_token
