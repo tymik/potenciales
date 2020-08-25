@@ -35,6 +35,7 @@ workflows:
     jobs:
       - docker/publish:
           docker-context: ./backend
+          dockerfile: ./backend/Dockerfile
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME_PYTHON_BE
           docker-username: CIRCLE_PROJECT_USERNAME
           docker-password: dockerhub_potenciales_token
