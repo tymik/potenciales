@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   docker: circleci/docker@1.4.0
 
-# commands:
+commands:
 #   dkr-cmd:
 #     parameters:
 #       dkr:
@@ -30,6 +30,15 @@ orbs:
 #       steps:
 #       executor:
 
+  app_setup:
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+          version: 19.03.12
+      - run:
+          name: Build runtime environment
+          command: docker-compose -f docker/circleci/docker-compose.yml up -d --build
+
 workflows:
   lint:
     jobs:
@@ -39,7 +48,6 @@ workflows:
           
   build-and-publish-docker-image:
     jobs:
-      
       - docker/publish:
           docker-context: ./backend
           dockerfile: ./backend/Dockerfile
@@ -56,3 +64,14 @@ workflows:
           docker-password: dockerhub_potenciales_token
           before_build:
             - checkout
+
+  manual-build:
+    jobs:
+      - app_setup
+      - run:
+        name: test curl
+        command: |
+          docker image ls
+          docker ps -a
+          curl localhost
+          curl localhost:8080/json/hostname
