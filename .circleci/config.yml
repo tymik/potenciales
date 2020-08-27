@@ -67,11 +67,12 @@ workflows:
 
   manual-build:
     jobs:
-      - app_setup
-      - run:
-          name: test curl
-          command: |
-            docker image ls
-            docker ps -a
-            curl localhost
-            curl localhost:8080/json/hostname
+      - steps:
+        - app_setup
+        - run:
+            name: test curl
+            command: |
+              docker image ls
+              docker ps -a
+              curl localhost
+              curl localhost:8080/json/hostname
