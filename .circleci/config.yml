@@ -44,7 +44,7 @@ commands:
           version: 19.03.12
       - run:
           name: Build runtime environment
-          command: docker-compose -f docker/circleci/docker-compose.yml up -d --build
+          command: docker-compose -f docker/docker-compose.yml up -d --build
 
 jobs:
   playing-around:
