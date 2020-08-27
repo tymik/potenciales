@@ -48,6 +48,7 @@ workflows:
           docker-password: dockerhub_potenciales_token
           before_build:
             - checkout
+          resource_class: small
       - docker/publish:
           docker-context: ./frontend
           dockerfile: ./frontend/Dockerfile.prod
@@ -56,3 +57,4 @@ workflows:
           docker-password: dockerhub_potenciales_token
           before_build:
             - checkout
+          resource_class: small
