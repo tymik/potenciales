@@ -3,6 +3,13 @@ version: 2.1
 orbs:
   docker: circleci/docker@1.4.0
 
+executors:
+  ruby-machine:
+    # working_directory: ~/repo
+    resource_class: medium
+    docker:
+      - image: circleci/ruby:2.6.5
+
 commands:
 #   dkr-cmd:
 #     parameters:
@@ -67,12 +74,14 @@ workflows:
 
   manual-build:
     jobs:
-      - steps:
-        - app_setup
-        - run:
-            name: test curl
-            command: |
-              docker image ls
-              docker ps -a
-              curl localhost
-              curl localhost:8080/json/hostname
+      playing-around:
+        executor: ruby-machine
+        steps:
+          - app_setup
+          - run:
+              name: test curl
+              command: |
+                docker image ls
+                docker ps -a
+                curl localhost
+                curl localhost:8080/json/hostname
