@@ -46,6 +46,20 @@ commands:
           name: Build runtime environment
           command: docker-compose -f docker/circleci/docker-compose.yml up -d --build
 
+jobs:
+  playing-around:
+    executor: ruby-machine
+    steps:
+      - checkout
+      - app_setup
+      - run:
+          name: test-curl
+          command: |
+            docker image ls
+            docker ps -a
+            curl localhost
+            curl localhost:8080/json/hostname
+
 workflows:
   lint:
     jobs:
@@ -74,14 +88,4 @@ workflows:
 
   manual-build:
     jobs:
-      playing-around:
-        executor: ruby-machine
-        steps:
-          - app_setup
-          - run:
-              name: test curl
-              command: |
-                docker image ls
-                docker ps -a
-                curl localhost
-                curl localhost:8080/json/hostname
+      - playing-around
