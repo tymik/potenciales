@@ -48,8 +48,8 @@ commands:
             echo "127.0.0.1	frontend.local" | sudo tee -a /etc/hosts
             echo "127.0.0.1	backend" | sudo tee -a /etc/hosts
             docker-compose -f docker/docker-compose.yml up -d --build
-            curl -i -X GET frontend.local
-            curl -i -X GET backend/json/hostname
+            dig frontend.local
+            dig backend
 
 jobs:
   playing-around:
