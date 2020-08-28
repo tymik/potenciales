@@ -61,7 +61,7 @@ jobs:
             docker image ls
             docker ps -a
             curl -i -X GET frontend.local
-            curl -i -X GET backend:8080/json/hostname
+            curl -i -X GET backend/json/hostname
 
 workflows:
   lint:
