@@ -48,8 +48,10 @@ commands:
             echo "127.0.0.1	frontend.local" | sudo tee -a /etc/hosts
             echo "127.0.0.1	backend" | sudo tee -a /etc/hosts
             docker-compose -f docker/docker-compose.yml up -d --build
-            curl -i -X GET backend/json/hostname
-            curl -i -X GET frontend.local
+            curl -i -X GET backend/json/hostname || echo failed
+            curl -i -X GET frontend.local || echo failed
+            curl -i -X GET docker_frontend_1 || echo failed
+            curl -i -X GET docker_backend_1 || echo failed
 
 jobs:
   playing-around:
