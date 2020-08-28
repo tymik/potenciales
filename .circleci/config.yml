@@ -60,6 +60,9 @@ jobs:
           command: |
             docker image ls
             docker ps -a
+            sleep 5
+            cat /etc/hosts
+            sleep 10
             curl -i -X GET frontend.local
             curl -i -X GET backend/json/hostname
 
