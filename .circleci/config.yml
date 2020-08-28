@@ -6,9 +6,14 @@ orbs:
 executors:
   ruby-machine:
     # working_directory: ~/repo
-    resource_class: medium
+    resource_class: small
     docker:
       - image: circleci/ruby:2.6.5
+  ubuntu-machine:
+    # working_directory: ~/repo
+    machine:
+      image: ubuntu-1604:202007-01
+    resource_class: medium
 
 commands:
 #   dkr-cmd:
@@ -55,7 +60,7 @@ commands:
 
 jobs:
   playing-around:
-    executor: ruby-machine
+    executor: ubuntu-machine
     steps:
       - checkout
       - app_setup
