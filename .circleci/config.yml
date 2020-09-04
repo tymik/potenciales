@@ -3,7 +3,19 @@ version: 2.1
 orbs:
   docker: circleci/docker@1.4.0
 
-# commands:
+executors:
+  ruby-machine:
+    # working_directory: ~/repo
+    resource_class: small
+    docker:
+      - image: circleci/ruby:2.6.5
+  ubuntu-machine:
+    # working_directory: ~/repo
+    machine:
+      image: ubuntu-1604:202007-01
+    resource_class: medium
+
+commands:
 #   dkr-cmd:
 #     parameters:
 #       dkr:
@@ -30,6 +42,39 @@ orbs:
 #       steps:
 #       executor:
 
+  app_setup:
+    steps:
+      # - setup_remote_docker:
+      #     # docker_layer_caching: true
+      #     version: 19.03.12
+      - run:
+          name: Build runtime environment
+          command: |
+            echo "127.0.0.1	frontend.local" | sudo tee -a /etc/hosts
+            echo "127.0.0.1	backend" | sudo tee -a /etc/hosts
+            docker-compose -f docker/docker-compose.yml up -d --build
+            curl -i -X GET backend/json/hostname || echo failed
+            curl -i -X GET frontend.local || echo failed
+            curl -i -X GET docker_frontend_1 || echo failed
+            curl -i -X GET docker_backend_1 || echo failed
+
+jobs:
+  playing-around:
+    executor: ubuntu-machine
+    steps:
+      - checkout
+      - app_setup
+      - run:
+          name: test-curl
+          command: |
+            docker image ls
+            docker ps -a
+            sleep 5
+            cat /etc/hosts
+            sleep 10
+            curl -i -X GET frontend.local
+            curl -i -X GET backend/json/hostname
+
 workflows:
   lint:
     jobs:
@@ -39,7 +84,6 @@ workflows:
           
   build-and-publish-docker-image:
     jobs:
-      
       - docker/publish:
           docker-context: ./backend
           dockerfile: ./backend/Dockerfile
@@ -48,7 +92,9 @@ workflows:
           docker-password: dockerhub_potenciales_token
           before_build:
             - checkout
-          resource_class: small
+          filters:
+            branches:
+              only: master
       - docker/publish:
           docker-context: ./frontend
           dockerfile: ./frontend/Dockerfile.prod
@@ -57,4 +103,10 @@ workflows:
           docker-password: dockerhub_potenciales_token
           before_build:
             - checkout
-          resource_class: small
+          filters:
+            branches:
+              only: master
+
+  manual-build:
+    jobs:
+      - playing-around

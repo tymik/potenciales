@@ -20,7 +20,7 @@ class App extends React.Component {
         {frontendId && (
           <FrontendModel
             status={frontendId}
-            setFrontendId={this.setFrontendId}
+            handleClick={this.setFrontendId}
           />
         )}
 

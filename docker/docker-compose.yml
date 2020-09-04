@@ -49,6 +49,10 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     environment:
       SOME_ENV: development
+    extra_hosts:
+      - "fronend.local:127.0.0.1"
+      - "backend:127.0.0.1"
+
 
 networks:
   frontend:
